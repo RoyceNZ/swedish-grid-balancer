@@ -9,17 +9,20 @@ The core innovative paradigm of this platform is the structural fusing of high-f
 ## 1. System Architecture Overview
 The platform strictly adheres to a decoupled **Medallion Data Architecture** using a unified temporal-spatial alignment matrix to transition unstructured API streams into highly analytical feature sets.
 
-[Live API Layer]          [Bronze Layer]            [Silver Layer]            [Gold Layer]
-┌──────────────┐          ┌──────────────┐          ┌──────────────┐          ┌──────────────┐
-│ SCB PxWebApi │ ───────> │  Raw JSON    │ ───────> │ Sanitized &  │ ───────> │ Spatial/Time │
-└──────────────┘          │  Snapshots   │          │ Type-Enforced│          │ Aligned Matrix│
-┌──────────────┐          │  (Immutable) │          │  Dataframes  │          └──────┬───────┘
-│ Riksbank API │ ───────> └──────────────┘          └──────┬───────┘                 │
-└──────────────┘                                           │                         ▼
-┌──────────────┐                                           ▼                  [Model Factory]
-│ ENTSO-E API  │ ──────────────────────────────────────────┘                  ┌──────────────┐
-└──────────────┘                                                              │ LightGBM Reg.│
-                                                                              └──────────────┘
+```mermaid
+flowchart LR
+  subgraph LiveAPIs[Live API Layer]
+    SCB[SCB PxWebApi]
+    RIKS[Riksbank API]
+    ENTSO[ENTSO-E API]
+  end
+  SCB --> Bronze[Bronze Layer<br/>Raw JSON / Snapshots]
+  RIKS --> Bronze
+  ENTSO --> Bronze
+  Bronze --> Silver[Silver Layer<br/>Sanitized & Type-Enforced Dataframes]
+  Silver --> Gold[Gold Layer<br/>Spatial/Time Aligned Matrix]
+  Gold --> Model[Model Factory<br/>LightGBM Regression]
+```
 
 ### Data Layer Definitions:
 *   **Bronze Layer:** Immutable raw payloads captured directly from upstream REST endpoints, saved as zipped JSON/CSV files with execution timestamps.
