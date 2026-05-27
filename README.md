@@ -63,6 +63,7 @@ To survive production data environments, the codebase implements four architectu
 
 ## 4. Repository Structure
 
+```text
 sweden-energy-grid-pipeline/
 ├── config/
 │   ├── settings.yaml              # API Endpoints, parameters, and credentials
@@ -88,6 +89,7 @@ sweden-energy-grid-pipeline/
 ├── tests/                         # PyTest suite for pipeline verification
 ├── requirements.txt               # Dependencies
 └── README.md                      # Project documentation
+```
 
 ## 5. Getting Started
 Prerequisites
