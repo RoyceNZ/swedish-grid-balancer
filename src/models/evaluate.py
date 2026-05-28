@@ -43,22 +43,12 @@ from sklearn.metrics import (
 )
 
 from .train import ModelArtifact, TrainingConfig, load_model_artifact
+from ..utils.pipeline_logging import get_pipeline_logger
 
 # ---------------------------------------------------------------------------
 # Logging Setup
 # ---------------------------------------------------------------------------
-logger = logging.getLogger("model_factory.evaluate")
-logger.setLevel(logging.DEBUG)
-
-if not logger.handlers:
-    _handler = logging.StreamHandler()
-    _handler.setFormatter(
-        logging.Formatter(
-            fmt="%(asctime)s | %(name)s | %(levelname)-8s | %(message)s",
-            datefmt="%Y-%m-%dT%H:%M:%S",
-        )
-    )
-    logger.addHandler(_handler)
+logger = get_pipeline_logger("model_factory.evaluate")
 
 # ---------------------------------------------------------------------------
 # Plot Style Constants

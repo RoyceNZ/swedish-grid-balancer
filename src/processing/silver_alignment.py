@@ -64,21 +64,12 @@ import numpy as np
 import pandas as pd
 from pydantic import BaseModel, Field
 
+from ..utils.pipeline_logging import get_pipeline_logger
+
 # ---------------------------------------------------------------------------
 # Logging Setup
 # ---------------------------------------------------------------------------
-logger = logging.getLogger("silver_alignment")
-logger.setLevel(logging.DEBUG)
-
-if not logger.handlers:
-    _handler = logging.StreamHandler()
-    _handler.setFormatter(
-        logging.Formatter(
-            fmt="%(asctime)s | %(name)s | %(levelname)-8s | %(message)s",
-            datefmt="%Y-%m-%dT%H:%M:%S",
-        )
-    )
-    logger.addHandler(_handler)
+logger = get_pipeline_logger("silver_alignment")
 
 
 # ---------------------------------------------------------------------------

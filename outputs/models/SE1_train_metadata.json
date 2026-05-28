@@ -1,6 +1,6 @@
 {
   "zone": "SE1",
-  "saved_at_utc": "2026-05-27T17:30:36.223549+00:00",
+  "saved_at_utc": "2026-05-28T20:01:26.842409+00:00",
   "feature_cols": [
     "construction_x_holiday",
     "day_of_week",
@@ -124,7 +124,7 @@
   },
   "train_metadata": {
     "zone": "SE1",
-    "trained_at_utc": "2026-05-27T17:30:36.131823+00:00",
+    "trained_at_utc": "2026-05-28T20:01:26.748492+00:00",
     "train_rows": 1248,
     "test_rows": 168,
     "train_start": "2024-01-02 00:00:00+00:00",

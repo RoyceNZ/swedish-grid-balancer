@@ -54,21 +54,12 @@ import pandas as pd
 from sklearn.model_selection import TimeSeriesSplit
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 
+from ..utils.pipeline_logging import get_pipeline_logger
+
 # ---------------------------------------------------------------------------
 # Logging Setup
 # ---------------------------------------------------------------------------
-logger = logging.getLogger("model_factory.train")
-logger.setLevel(logging.DEBUG)
-
-if not logger.handlers:
-    _handler = logging.StreamHandler()
-    _handler.setFormatter(
-        logging.Formatter(
-            fmt="%(asctime)s | %(name)s | %(levelname)-8s | %(message)s",
-            datefmt="%Y-%m-%dT%H:%M:%S",
-        )
-    )
-    logger.addHandler(_handler)
+logger = get_pipeline_logger("model_factory.train")
 
 
 # ===========================================================================

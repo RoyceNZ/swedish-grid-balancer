@@ -48,7 +48,6 @@ Downstream: src/models/train.py
 
 from __future__ import annotations
 
-import logging
 import os
 import warnings
 from dataclasses import dataclass, field
@@ -58,21 +57,12 @@ from typing import Optional
 import numpy as np
 import pandas as pd
 
+from ..utils.pipeline_logging import get_pipeline_logger
+
 # ---------------------------------------------------------------------------
 # Logging Setup
 # ---------------------------------------------------------------------------
-logger = logging.getLogger("grid_balancing_features")
-logger.setLevel(logging.DEBUG)
-
-if not logger.handlers:
-    _handler = logging.StreamHandler()
-    _handler.setFormatter(
-        logging.Formatter(
-            fmt="%(asctime)s | %(name)s | %(levelname)-8s | %(message)s",
-            datefmt="%Y-%m-%dT%H:%M:%S",
-        )
-    )
-    logger.addHandler(_handler)
+logger = get_pipeline_logger("grid_balancing_features")
 
 
 # ===========================================================================

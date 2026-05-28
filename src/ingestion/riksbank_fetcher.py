@@ -68,20 +68,12 @@ from .client import (
     DEFAULT_BASE_BACKOFF_SECONDS,
     DEFAULT_MAX_BACKOFF_SECONDS,
 )
+from ..utils.pipeline_logging import get_pipeline_logger
 
 # ---------------------------------------------------------------------------
 # Module Logger
 # ---------------------------------------------------------------------------
-logger = logging.getLogger("ingestion.riksbank_fetcher")
-logger.setLevel(logging.DEBUG)
-
-if not logger.handlers:
-    _h = logging.StreamHandler()
-    _h.setFormatter(logging.Formatter(
-        fmt="%(asctime)s | %(name)s | %(levelname)-8s | %(message)s",
-        datefmt="%Y-%m-%dT%H:%M:%S",
-    ))
-    logger.addHandler(_h)
+logger = get_pipeline_logger("ingestion.riksbank_fetcher")
 
 
 # ---------------------------------------------------------------------------

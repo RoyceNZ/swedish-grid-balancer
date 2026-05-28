@@ -63,22 +63,13 @@ from .client import (
     DEFAULT_JITTER_RANGE,
     DEFAULT_RETRYABLE_STATUS_CODES,
 )
+from ..utils.pipeline_logging import get_pipeline_logger
+from ..utils.bronze import BronzeWriterBase
 
 # ---------------------------------------------------------------------------
 # Module Logger
 # ---------------------------------------------------------------------------
-logger = logging.getLogger("ingestion.energy_client")
-logger.setLevel(logging.DEBUG)
-
-if not logger.handlers:
-    _handler = logging.StreamHandler()
-    _handler.setFormatter(
-        logging.Formatter(
-            fmt="%(asctime)s | %(name)s | %(levelname)-8s | %(message)s",
-            datefmt="%Y-%m-%dT%H:%M:%S",
-        )
-    )
-    logger.addHandler(_handler)
+logger = get_pipeline_logger("ingestion.energy_client")
 
 
 # ---------------------------------------------------------------------------
@@ -670,7 +661,7 @@ class ENTSOEXMLParser:
 # ---------------------------------------------------------------------------
 # Bronze Layer Writer
 # ---------------------------------------------------------------------------
-class BronzeWriter:
+class BronzeWriter(BronzeWriterBase):
     """
     Writes immutable Bronze layer snapshots with gzip compression and
     metadata manifests.
@@ -682,10 +673,6 @@ class BronzeWriter:
     the deterministic prefix (doc_type + zone + date range) supports
     idempotency checks and de-duplication in downstream processes.
     """
-
-    def __init__(self, bronze_dir: Path) -> None:
-        self.bronze_dir = Path(bronze_dir)
-        self.bronze_dir.mkdir(parents=True, exist_ok=True)
 
     def write_xml(
         self,
@@ -708,23 +695,6 @@ class BronzeWriter:
             out_path, size_kb, len(xml_content),
         )
         return out_path
-
-    def write_manifest(
-        self,
-        manifest: BronzeManifestRecord,
-        bronze_path: Path,
-    ) -> Path:
-        """
-        Write a JSON metadata manifest alongside the Bronze snapshot.
-
-        The manifest enables downstream processes to inspect what was fetched
-        without decompressing and parsing the full XML payload.
-        """
-        manifest_path = bronze_path.with_suffix(".manifest.json")
-        with open(manifest_path, "w", encoding="utf-8") as fh:
-            json.dump(manifest.model_dump(), fh, indent=2, ensure_ascii=False)
-        logger.debug("Manifest written → %s", manifest_path)
-        return manifest_path
 
     @staticmethod
     def _build_filename(

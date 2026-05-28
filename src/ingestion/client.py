@@ -41,21 +41,12 @@ from typing import Any, Callable, ClassVar, Optional
 
 import httpx
 
+from ..utils.pipeline_logging import get_pipeline_logger
+
 # ---------------------------------------------------------------------------
 # Module-Level Logger
 # ---------------------------------------------------------------------------
-logger = logging.getLogger("ingestion.client")
-logger.setLevel(logging.DEBUG)
-
-if not logger.handlers:
-    _handler = logging.StreamHandler()
-    _handler.setFormatter(
-        logging.Formatter(
-            fmt="%(asctime)s | %(name)s | %(levelname)-8s | %(message)s",
-            datefmt="%Y-%m-%dT%H:%M:%S",
-        )
-    )
-    logger.addHandler(_handler)
+logger = get_pipeline_logger("ingestion.client")
 
 
 # ---------------------------------------------------------------------------
