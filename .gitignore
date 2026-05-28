@@ -1,0 +1,17 @@
+# Local Virtual Environment
+venv/
+.env
+
+# Local Cache Layers
+__pycache__/
+*.pyc
+
+# Local Data Lake (Never push large parquet datasets to GitHub!)
+data/bronze/
+data/silver/
+data/gold/
+
+# Project Inference Outputs
+outputs/models/
+outputs/plots/
+codebase_snapshot.txt
